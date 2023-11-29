@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:svg_flutter/svg.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -7,17 +8,26 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Column(
-        children: [Text("test")],
+        children: [
+          Text("test"),
+        ],
       ),
+      bottomNavigationBar: BottomNavBarDashboard(),
     );
   }
 }
 
-List<String> navIconSrc = [
-  "assets/icons/Lock.svg",
-  "assets/icons/Charge.svg",
-  "assets/icons/Temp.svg",
-  "assets/icons/Tyre.svg"
+class DashboardIcon {
+  final String title;
+  final String icon;
+
+  DashboardIcon({required this.title, required this.icon});
+}
+
+List<DashboardIcon> navIconSrc = [
+  DashboardIcon(title: "Home", icon: "assets/icons/home.svg"),
+  DashboardIcon(title: "Widget", icon: "assets/icons/bolt.svg"),
+  DashboardIcon(title: "UI", icon: "assets/icons/list.svg")
 ];
 
 class BottomNavBarDashboard extends StatelessWidget {
@@ -28,8 +38,9 @@ class BottomNavBarDashboard extends StatelessWidget {
     return BottomNavigationBar(
       items: List.generate(
         navIconSrc.length,
-        (index) => const BottomNavigationBarItem(
-          icon: Icon(Icons.abc),
+        (index) => BottomNavigationBarItem(
+          icon: SvgPicture.asset(navIconSrc[index].icon),
+          label: navIconSrc[index].title,
         ),
       ),
     );
